@@ -1,4 +1,4 @@
-module github/xh-dev-go/md-url
+module github.com/xh-dev-go/md-url
 
 go 1.18
 
