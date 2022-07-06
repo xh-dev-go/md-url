@@ -21,7 +21,7 @@ func main() {
 		return
 	}
 
-	text = fmt.Sprintf("[%s](%s)", parse.Host, text)
+	text = fmt.Sprintf("[[%s]](%s)", parse.Host, text)
 	fmt.Println(text)
 	clipboard.Write(clipboard.FmtText, []byte(text))
 }
