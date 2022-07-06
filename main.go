@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"golang.design/x/clipboard"
-	"strings"
+	"net/url"
 )
 
 func main() {
@@ -15,16 +15,13 @@ func main() {
 	textByte := clipboard.Read(clipboard.FmtText)
 	text := string(textByte)
 
-	if strings.HasPrefix(text, "http") {
-		if strings.ContainsAny(strings.ToLower(text), "https://stackoverflow.com") {
-			text = fmt.Sprintf("[Stack Overflow](%s)", text)
-		} else if strings.ContainsAny(strings.ToLower(text), "https://github.com") {
-			text = fmt.Sprintf("[Git Hub](%s)", text)
-		} else {
-			text = fmt.Sprintf("[URL](%s)", text)
-		}
+	parse, err := url.Parse(text)
+	if err != nil {
+		fmt.Println("Not a url")
+		return
 	}
 
+	text = fmt.Sprintf("[%s](%s)", parse.Host, text)
+	fmt.Println(text)
 	clipboard.Write(clipboard.FmtText, []byte(text))
-
 }
